@@ -8,18 +8,14 @@
     "start": "node dist/server.js",
     "build": "tsc -p .",
     "lint": "eslint .",
-
     "dev:up": "./scripts/dev-up.sh",
     "dev:down": "./scripts/dev-down.sh",
-
     "db:up": "docker compose up -d db",
     "db:stop": "docker compose stop db",
     "db:restart": "docker compose restart db",
     "db:down": "docker compose down",
     "db:logs": "docker compose logs -f db",
-
     "db:reset": "docker compose down -v && docker compose up -d db && ./scripts/wait-for-db.sh && npm run prisma:reset",
-
     "prisma:generate": "prisma generate",
     "prisma:deploy": "prisma generate && prisma migrate deploy",
     "prisma:dev": "prisma generate && prisma migrate dev",
@@ -44,6 +40,7 @@
     "@fastify/cors": "^11.1.0",
     "@fastify/jwt": "^10.0.0",
     "@prisma/client": "^6.16.2",
+    "bcryptjs": "^3.0.2",
     "dotenv": "^17.2.2",
     "fastify": "^5.6.0",
     "zod": "^4.1.11"
