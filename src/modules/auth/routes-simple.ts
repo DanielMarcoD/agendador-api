@@ -9,20 +9,7 @@ import { kid as serverKid, publicKey } from '../../security/keys'
 export async function authRoutes(app: FastifyInstance) {
   app.get('/auth/pubkey', {
     schema: {
-      tags: ['Auth'],
-      summary: 'Get public key',
-      description: 'Get the server public key for encryption',
-      response: {
-        200: {
-          description: 'Public key data',
-          type: 'object',
-          properties: {
-            kid: { type: 'string' },
-            alg: { type: 'string' },
-            pem: { type: 'string' }
-          }
-        }
-      }
+      tags: ['Auth']
     }
   }, async () => ({ kid: serverKid, alg: 'RSA-OAEP-256', pem: publicKey }))
 
@@ -131,51 +118,6 @@ export async function authRoutes(app: FastifyInstance) {
     }
   })
 
-  app.post('/auth/refresh', {
-    schema: {
-      tags: ['Auth']
-    }
-  }, async (req, reply) => {
-    try {
-      const { refreshToken } = req.body as { refreshToken: string }
-      
-      if (!refreshToken) {
-        return reply.code(400).send({ message: 'Refresh token é obrigatório' })
-      }
-
-      // Verificar refresh token
-      try {
-        const decoded = (app as any).refresh.verify(refreshToken)
-        const userId = decoded.sub as string
-        
-        // Verificar se usuário ainda existe
-        const user = await prisma.user.findUnique({ 
-          where: { id: userId },
-          select: { id: true, name: true, email: true }
-        })
-        
-        if (!user) {
-          return reply.code(401).send({ message: 'Usuário não encontrado' })
-        }
-
-        // Gerar novos tokens
-        const newAccessToken = app.jwt.sign({ sub: user.id })
-        const newRefreshToken = (app as any).refresh.sign({ sub: user.id })
-
-        return reply.send({
-          user,
-          accessToken: newAccessToken,
-          refreshToken: newRefreshToken
-        })
-      } catch (error) {
-        return reply.code(401).send({ message: 'Refresh token inválido ou expirado' })
-      }
-    } catch (error) {
-      console.error('Erro no refresh token:', error)
-      return reply.code(500).send({ message: 'Erro interno do servidor' })
-    }
-  })
-
   app.get('/me', {
     preHandler: (req, _res, next) => { try { req.jwtVerify(); next() } catch (e) { next(e as Error) } },
     schema: {
@@ -187,7 +129,6 @@ export async function authRoutes(app: FastifyInstance) {
     return { user }
   })
 
-  // Endpoint de teste simples para debug
   app.post('/auth/test-login', {
     schema: {
       tags: ['Auth']

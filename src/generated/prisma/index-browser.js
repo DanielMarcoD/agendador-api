@@ -136,7 +136,15 @@ exports.Prisma.EventScalarFieldEnum = {
   category: 'category',
   startsAt: 'startsAt',
   endsAt: 'endsAt',
+  createdAt: 'createdAt',
   recurrence: 'recurrence',
+  parentEventId: 'parentEventId'
+};
+
+exports.Prisma.EventParticipantScalarFieldEnum = {
+  eventId: 'eventId',
+  userId: 'userId',
+  role: 'role',
   createdAt: 'createdAt'
 };
 
@@ -154,11 +162,22 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.Recurrence = exports.$Enums.Recurrence = {
+  NONE: 'NONE',
+  DAILY: 'DAILY',
+  WEEKLY: 'WEEKLY',
+  MONTHLY: 'MONTHLY'
+};
 
+exports.ParticipantRole = exports.$Enums.ParticipantRole = {
+  VIEWER: 'VIEWER',
+  EDITOR: 'EDITOR'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Event: 'Event'
+  Event: 'Event',
+  EventParticipant: 'EventParticipant'
 };
 
 /**
