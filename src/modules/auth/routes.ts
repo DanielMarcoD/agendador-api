@@ -106,11 +106,81 @@ export async function authRoutes(app: FastifyInstance) {
     }
   })
 
+  app.post('/auth/refresh', async (req, reply) => {
+    try {
+      const { refreshToken } = req.body as { refreshToken: string }
+      
+      if (!refreshToken) {
+        return reply.code(400).send({ message: 'Refresh token é obrigatório' })
+      }
+
+      // Verificar refresh token
+      try {
+        const decoded = (app as any).refresh.verify(refreshToken)
+        const userId = decoded.sub as string
+        
+        // Verificar se usuário ainda existe
+        const user = await prisma.user.findUnique({ 
+          where: { id: userId },
+          select: { id: true, name: true, email: true }
+        })
+        
+        if (!user) {
+          return reply.code(401).send({ message: 'Usuário não encontrado' })
+        }
+
+        // Gerar novos tokens
+        const newAccessToken = app.jwt.sign({ sub: user.id })
+        const newRefreshToken = (app as any).refresh.sign({ sub: user.id })
+
+        return reply.send({
+          user,
+          accessToken: newAccessToken,
+          refreshToken: newRefreshToken
+        })
+      } catch (error) {
+        return reply.code(401).send({ message: 'Refresh token inválido ou expirado' })
+      }
+    } catch (error) {
+      console.error('Erro no refresh token:', error)
+      return reply.code(500).send({ message: 'Erro interno do servidor' })
+    }
+  })
+
   app.get('/me', {
     preHandler: (req, _res, next) => { try { req.jwtVerify(); next() } catch (e) { next(e as Error) } }
   }, async (req) => {
     const userId = (req.user as any).sub as string
     const user = await prisma.user.findUnique({ where: { id: userId }, select: { id: true, name: true, email: true } })
     return { user }
+  })
+
+  // Endpoint de teste simples para debug
+  app.post('/auth/test-login', async (req, reply) => {
+    try {
+      const { email, password } = req.body as { email: string, password: string }
+      
+      const user = await prisma.user.findUnique({ where: { email } })
+      if (!user) return reply.code(401).send({ message: 'Credenciais inválidas' })
+      
+      const ok = await bcrypt.compare(password, user.passwordHash)
+      if (!ok) return reply.code(401).send({ message: 'Credenciais inválidas' })
+
+      const accessToken = app.jwt.sign({ sub: user.id })
+      
+      let refreshToken = null
+      try {
+        if ((app as any).refresh && typeof (app as any).refresh.sign === 'function') {
+          refreshToken = (app as any).refresh.sign({ sub: user.id })
+        }
+      } catch (refreshError: any) {
+        console.warn('Erro ao gerar refresh token:', refreshError?.message || refreshError)
+      }
+
+      return { accessToken, refreshToken, user: { id: user.id, name: user.name, email: user.email } }
+    } catch (error) {
+      console.error('Erro no login de teste:', error)
+      return reply.code(500).send({ message: 'Erro interno do servidor' })
+    }
   })
 }

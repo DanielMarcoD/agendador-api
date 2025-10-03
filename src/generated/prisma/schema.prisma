@@ -34,4 +34,6 @@ model Event {
   endsAt      DateTime
   recurrence  String? // ex.: RRULE simplificada
   createdAt   DateTime @default(now())
+
+  @@index([ownerId, startsAt])
 }

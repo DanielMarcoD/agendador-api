@@ -3,11 +3,16 @@ import cors from '@fastify/cors'
 import jwt from '@fastify/jwt'
 import { env } from './config/env'
 import { authRoutes } from './modules/auth/routes'
+import { eventsRoutes } from './modules/events/routes'
 
 const app = Fastify({ logger: true })
 
 try {
-  await app.register(cors, { origin: true })
+  await app.register(cors, { 
+    origin: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  })
 
 
   await app.register(jwt, {
@@ -47,6 +52,7 @@ try {
 app.get('/health', async () => ({ ok: true, env: env.NODE_ENV }))
 
 await app.register(authRoutes)
+await app.register(eventsRoutes)
 
 app.listen({ port: env.PORT, host: '0.0.0.0' })
   .then(() => app.log.info(`API up on :${env.PORT}`))
