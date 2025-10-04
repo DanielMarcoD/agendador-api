@@ -108,8 +108,23 @@ exports.Prisma.EventScalarFieldEnum = {
   category: 'category',
   startsAt: 'startsAt',
   endsAt: 'endsAt',
+  createdAt: 'createdAt',
   recurrence: 'recurrence',
+  parentEventId: 'parentEventId'
+};
+
+exports.Prisma.EventParticipantScalarFieldEnum = {
+  eventId: 'eventId',
+  userId: 'userId',
+  role: 'role',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.DeletedEventOccurrenceScalarFieldEnum = {
+  id: 'id',
+  parentEventId: 'parentEventId',
+  occurrenceDate: 'occurrenceDate',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -126,11 +141,23 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.ParticipantRole = exports.$Enums.ParticipantRole = {
+  VIEWER: 'VIEWER',
+  EDITOR: 'EDITOR'
+};
 
+exports.Recurrence = exports.$Enums.Recurrence = {
+  NONE: 'NONE',
+  DAILY: 'DAILY',
+  WEEKLY: 'WEEKLY',
+  MONTHLY: 'MONTHLY'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Event: 'Event'
+  Event: 'Event',
+  EventParticipant: 'EventParticipant',
+  DeletedEventOccurrence: 'DeletedEventOccurrence'
 };
 /**
  * Create the Client
@@ -180,13 +207,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id           String   @id @default(cuid())\n  name         String\n  email        String   @unique\n  passwordHash String\n  createdAt    DateTime @default(now())\n  events       Event[]  @relation(\"UserEvents\")\n}\n\nmodel Event {\n  id          String   @id @default(cuid())\n  owner       User     @relation(\"UserEvents\", fields: [ownerId], references: [id])\n  ownerId     String\n  title       String\n  description String?\n  category    String\n  startsAt    DateTime\n  endsAt      DateTime\n  recurrence  String? // ex.: RRULE simplificada\n  createdAt   DateTime @default(now())\n\n  @@index([ownerId, startsAt])\n}\n",
-  "inlineSchemaHash": "486120f4540ac4e6f295153d94e50b1c9d93d4b850e08ea25674413e89a347bf",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id               String             @id @default(cuid())\n  name             String\n  email            String             @unique\n  passwordHash     String\n  createdAt        DateTime           @default(now())\n  events           Event[]            @relation(\"UserEvents\")\n  EventParticipant EventParticipant[]\n}\n\nmodel Event {\n  id                     String                   @id @default(cuid())\n  ownerId                String\n  title                  String\n  description            String?\n  category               String\n  startsAt               DateTime\n  endsAt                 DateTime\n  createdAt              DateTime                 @default(now())\n  recurrence             Recurrence               @default(NONE)\n  parentEventId          String?\n  owner                  User                     @relation(\"UserEvents\", fields: [ownerId], references: [id])\n  EventParticipant       EventParticipant[]\n  DeletedEventOccurrence DeletedEventOccurrence[]\n\n  @@index([ownerId, startsAt])\n  @@index([parentEventId])\n}\n\nmodel EventParticipant {\n  eventId   String\n  userId    String\n  role      ParticipantRole @default(VIEWER)\n  createdAt DateTime        @default(now())\n  Event     Event           @relation(fields: [eventId], references: [id], onDelete: Cascade)\n  User      User            @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@id([eventId, userId])\n}\n\nmodel DeletedEventOccurrence {\n  id             String   @id @default(cuid())\n  parentEventId  String\n  occurrenceDate DateTime\n  deletedAt      DateTime @default(now())\n  Event          Event    @relation(fields: [parentEventId], references: [id], onDelete: Cascade)\n\n  @@unique([parentEventId, occurrenceDate])\n}\n\nenum ParticipantRole {\n  VIEWER\n  EDITOR\n}\n\nenum Recurrence {\n  NONE\n  DAILY\n  WEEKLY\n  MONTHLY\n}\n",
+  "inlineSchemaHash": "038f95ce09ee97673a4392216fb5fb876a6144632953b34bd6c3fa7b493f8cfa",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"events\",\"kind\":\"object\",\"type\":\"Event\",\"relationName\":\"UserEvents\"}],\"dbName\":null},\"Event\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"owner\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserEvents\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"startsAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endsAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"recurrence\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"events\",\"kind\":\"object\",\"type\":\"Event\",\"relationName\":\"UserEvents\"},{\"name\":\"EventParticipant\",\"kind\":\"object\",\"type\":\"EventParticipant\",\"relationName\":\"EventParticipantToUser\"}],\"dbName\":null},\"Event\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"startsAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endsAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"recurrence\",\"kind\":\"enum\",\"type\":\"Recurrence\"},{\"name\":\"parentEventId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"owner\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserEvents\"},{\"name\":\"EventParticipant\",\"kind\":\"object\",\"type\":\"EventParticipant\",\"relationName\":\"EventToEventParticipant\"},{\"name\":\"DeletedEventOccurrence\",\"kind\":\"object\",\"type\":\"DeletedEventOccurrence\",\"relationName\":\"DeletedEventOccurrenceToEvent\"}],\"dbName\":null},\"EventParticipant\":{\"fields\":[{\"name\":\"eventId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"ParticipantRole\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Event\",\"kind\":\"object\",\"type\":\"Event\",\"relationName\":\"EventToEventParticipant\"},{\"name\":\"User\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"EventParticipantToUser\"}],\"dbName\":null},\"DeletedEventOccurrence\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentEventId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"occurrenceDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deletedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Event\",\"kind\":\"object\",\"type\":\"Event\",\"relationName\":\"DeletedEventOccurrenceToEvent\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
