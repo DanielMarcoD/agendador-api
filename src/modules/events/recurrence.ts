@@ -11,7 +11,8 @@ export function generateRecurringEventsForPeriod(
     ownerId: string
   },
   fromDate: Date,
-  toDate: Date
+  toDate: Date,
+  deletedOccurrences: Date[] = []
 ): Array<{
   id: string
   title: string
@@ -53,18 +54,25 @@ export function generateRecurringEventsForPeriod(
   while (currentStart <= toDate) {
     const currentEnd = new Date(currentStart.getTime() + duration)
     
-    events.push({
-      id: `${baseEvent.id}-${occurrenceNumber}`, // ID único para cada ocorrência
-      title: baseEvent.title,
-      description: baseEvent.description || null,
-      category: baseEvent.category,
-      startsAt: new Date(currentStart),
-      endsAt: currentEnd,
-      recurrence: 'NONE' as const, // Eventos filhos não são recorrentes
-      ownerId: baseEvent.ownerId,
-      parentEventId: baseEvent.id,
-      isVirtual: true
-    })
+    // Verificar se esta ocorrência foi deletada
+    const isDeleted = deletedOccurrences.some(deletedDate => 
+      Math.abs(deletedDate.getTime() - currentStart.getTime()) < 60000 // 1 minuto de tolerância
+    )
+    
+    if (!isDeleted) {
+      events.push({
+        id: `${baseEvent.id}-${occurrenceNumber}`, // ID único para cada ocorrência
+        title: baseEvent.title,
+        description: baseEvent.description || null,
+        category: baseEvent.category,
+        startsAt: new Date(currentStart),
+        endsAt: currentEnd,
+        recurrence: 'NONE' as const, // Eventos filhos não são recorrentes
+        ownerId: baseEvent.ownerId,
+        parentEventId: baseEvent.id,
+        isVirtual: true
+      })
+    }
 
     // Calcular próxima ocorrência
     switch (baseEvent.recurrence) {

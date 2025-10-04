@@ -28,6 +28,11 @@ export type Event = $Result.DefaultSelection<Prisma.$EventPayload>
  * 
  */
 export type EventParticipant = $Result.DefaultSelection<Prisma.$EventParticipantPayload>
+/**
+ * Model DeletedEventOccurrence
+ * 
+ */
+export type DeletedEventOccurrence = $Result.DefaultSelection<Prisma.$DeletedEventOccurrencePayload>
 
 /**
  * Enums
@@ -207,6 +212,16 @@ export class PrismaClient<
     * ```
     */
   get eventParticipant(): Prisma.EventParticipantDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.deletedEventOccurrence`: Exposes CRUD operations for the **DeletedEventOccurrence** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DeletedEventOccurrences
+    * const deletedEventOccurrences = await prisma.deletedEventOccurrence.findMany()
+    * ```
+    */
+  get deletedEventOccurrence(): Prisma.DeletedEventOccurrenceDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -649,7 +664,8 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Event: 'Event',
-    EventParticipant: 'EventParticipant'
+    EventParticipant: 'EventParticipant',
+    DeletedEventOccurrence: 'DeletedEventOccurrence'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -668,7 +684,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "event" | "eventParticipant"
+      modelProps: "user" | "event" | "eventParticipant" | "deletedEventOccurrence"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -894,6 +910,80 @@ export namespace Prisma {
           }
         }
       }
+      DeletedEventOccurrence: {
+        payload: Prisma.$DeletedEventOccurrencePayload<ExtArgs>
+        fields: Prisma.DeletedEventOccurrenceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DeletedEventOccurrenceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeletedEventOccurrencePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DeletedEventOccurrenceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeletedEventOccurrencePayload>
+          }
+          findFirst: {
+            args: Prisma.DeletedEventOccurrenceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeletedEventOccurrencePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DeletedEventOccurrenceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeletedEventOccurrencePayload>
+          }
+          findMany: {
+            args: Prisma.DeletedEventOccurrenceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeletedEventOccurrencePayload>[]
+          }
+          create: {
+            args: Prisma.DeletedEventOccurrenceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeletedEventOccurrencePayload>
+          }
+          createMany: {
+            args: Prisma.DeletedEventOccurrenceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DeletedEventOccurrenceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeletedEventOccurrencePayload>[]
+          }
+          delete: {
+            args: Prisma.DeletedEventOccurrenceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeletedEventOccurrencePayload>
+          }
+          update: {
+            args: Prisma.DeletedEventOccurrenceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeletedEventOccurrencePayload>
+          }
+          deleteMany: {
+            args: Prisma.DeletedEventOccurrenceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DeletedEventOccurrenceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DeletedEventOccurrenceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeletedEventOccurrencePayload>[]
+          }
+          upsert: {
+            args: Prisma.DeletedEventOccurrenceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeletedEventOccurrencePayload>
+          }
+          aggregate: {
+            args: Prisma.DeletedEventOccurrenceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDeletedEventOccurrence>
+          }
+          groupBy: {
+            args: Prisma.DeletedEventOccurrenceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DeletedEventOccurrenceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DeletedEventOccurrenceCountArgs<ExtArgs>
+            result: $Utils.Optional<DeletedEventOccurrenceCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -993,6 +1083,7 @@ export namespace Prisma {
     user?: UserOmit
     event?: EventOmit
     eventParticipant?: EventParticipantOmit
+    deletedEventOccurrence?: DeletedEventOccurrenceOmit
   }
 
   /* Types for Logging */
@@ -1114,10 +1205,12 @@ export namespace Prisma {
 
   export type EventCountOutputType = {
     EventParticipant: number
+    DeletedEventOccurrence: number
   }
 
   export type EventCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     EventParticipant?: boolean | EventCountOutputTypeCountEventParticipantArgs
+    DeletedEventOccurrence?: boolean | EventCountOutputTypeCountDeletedEventOccurrenceArgs
   }
 
   // Custom InputTypes
@@ -1136,6 +1229,13 @@ export namespace Prisma {
    */
   export type EventCountOutputTypeCountEventParticipantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EventParticipantWhereInput
+  }
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountDeletedEventOccurrenceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeletedEventOccurrenceWhereInput
   }
 
 
@@ -2447,6 +2547,7 @@ export namespace Prisma {
     parentEventId?: boolean
     owner?: boolean | UserDefaultArgs<ExtArgs>
     EventParticipant?: boolean | Event$EventParticipantArgs<ExtArgs>
+    DeletedEventOccurrence?: boolean | Event$DeletedEventOccurrenceArgs<ExtArgs>
     _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
@@ -2495,6 +2596,7 @@ export namespace Prisma {
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | UserDefaultArgs<ExtArgs>
     EventParticipant?: boolean | Event$EventParticipantArgs<ExtArgs>
+    DeletedEventOccurrence?: boolean | Event$DeletedEventOccurrenceArgs<ExtArgs>
     _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2509,6 +2611,7 @@ export namespace Prisma {
     objects: {
       owner: Prisma.$UserPayload<ExtArgs>
       EventParticipant: Prisma.$EventParticipantPayload<ExtArgs>[]
+      DeletedEventOccurrence: Prisma.$DeletedEventOccurrencePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2917,6 +3020,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     owner<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     EventParticipant<T extends Event$EventParticipantArgs<ExtArgs> = {}>(args?: Subset<T, Event$EventParticipantArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventParticipantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    DeletedEventOccurrence<T extends Event$DeletedEventOccurrenceArgs<ExtArgs> = {}>(args?: Subset<T, Event$DeletedEventOccurrenceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeletedEventOccurrencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3373,6 +3477,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EventParticipantScalarFieldEnum | EventParticipantScalarFieldEnum[]
+  }
+
+  /**
+   * Event.DeletedEventOccurrence
+   */
+  export type Event$DeletedEventOccurrenceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceInclude<ExtArgs> | null
+    where?: DeletedEventOccurrenceWhereInput
+    orderBy?: DeletedEventOccurrenceOrderByWithRelationInput | DeletedEventOccurrenceOrderByWithRelationInput[]
+    cursor?: DeletedEventOccurrenceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DeletedEventOccurrenceScalarFieldEnum | DeletedEventOccurrenceScalarFieldEnum[]
   }
 
   /**
@@ -4448,6 +4576,1051 @@ export namespace Prisma {
 
 
   /**
+   * Model DeletedEventOccurrence
+   */
+
+  export type AggregateDeletedEventOccurrence = {
+    _count: DeletedEventOccurrenceCountAggregateOutputType | null
+    _min: DeletedEventOccurrenceMinAggregateOutputType | null
+    _max: DeletedEventOccurrenceMaxAggregateOutputType | null
+  }
+
+  export type DeletedEventOccurrenceMinAggregateOutputType = {
+    id: string | null
+    parentEventId: string | null
+    occurrenceDate: Date | null
+    deletedAt: Date | null
+  }
+
+  export type DeletedEventOccurrenceMaxAggregateOutputType = {
+    id: string | null
+    parentEventId: string | null
+    occurrenceDate: Date | null
+    deletedAt: Date | null
+  }
+
+  export type DeletedEventOccurrenceCountAggregateOutputType = {
+    id: number
+    parentEventId: number
+    occurrenceDate: number
+    deletedAt: number
+    _all: number
+  }
+
+
+  export type DeletedEventOccurrenceMinAggregateInputType = {
+    id?: true
+    parentEventId?: true
+    occurrenceDate?: true
+    deletedAt?: true
+  }
+
+  export type DeletedEventOccurrenceMaxAggregateInputType = {
+    id?: true
+    parentEventId?: true
+    occurrenceDate?: true
+    deletedAt?: true
+  }
+
+  export type DeletedEventOccurrenceCountAggregateInputType = {
+    id?: true
+    parentEventId?: true
+    occurrenceDate?: true
+    deletedAt?: true
+    _all?: true
+  }
+
+  export type DeletedEventOccurrenceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DeletedEventOccurrence to aggregate.
+     */
+    where?: DeletedEventOccurrenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeletedEventOccurrences to fetch.
+     */
+    orderBy?: DeletedEventOccurrenceOrderByWithRelationInput | DeletedEventOccurrenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DeletedEventOccurrenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeletedEventOccurrences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeletedEventOccurrences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DeletedEventOccurrences
+    **/
+    _count?: true | DeletedEventOccurrenceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DeletedEventOccurrenceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DeletedEventOccurrenceMaxAggregateInputType
+  }
+
+  export type GetDeletedEventOccurrenceAggregateType<T extends DeletedEventOccurrenceAggregateArgs> = {
+        [P in keyof T & keyof AggregateDeletedEventOccurrence]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDeletedEventOccurrence[P]>
+      : GetScalarType<T[P], AggregateDeletedEventOccurrence[P]>
+  }
+
+
+
+
+  export type DeletedEventOccurrenceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeletedEventOccurrenceWhereInput
+    orderBy?: DeletedEventOccurrenceOrderByWithAggregationInput | DeletedEventOccurrenceOrderByWithAggregationInput[]
+    by: DeletedEventOccurrenceScalarFieldEnum[] | DeletedEventOccurrenceScalarFieldEnum
+    having?: DeletedEventOccurrenceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DeletedEventOccurrenceCountAggregateInputType | true
+    _min?: DeletedEventOccurrenceMinAggregateInputType
+    _max?: DeletedEventOccurrenceMaxAggregateInputType
+  }
+
+  export type DeletedEventOccurrenceGroupByOutputType = {
+    id: string
+    parentEventId: string
+    occurrenceDate: Date
+    deletedAt: Date
+    _count: DeletedEventOccurrenceCountAggregateOutputType | null
+    _min: DeletedEventOccurrenceMinAggregateOutputType | null
+    _max: DeletedEventOccurrenceMaxAggregateOutputType | null
+  }
+
+  type GetDeletedEventOccurrenceGroupByPayload<T extends DeletedEventOccurrenceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DeletedEventOccurrenceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DeletedEventOccurrenceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DeletedEventOccurrenceGroupByOutputType[P]>
+            : GetScalarType<T[P], DeletedEventOccurrenceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DeletedEventOccurrenceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    parentEventId?: boolean
+    occurrenceDate?: boolean
+    deletedAt?: boolean
+    Event?: boolean | EventDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deletedEventOccurrence"]>
+
+  export type DeletedEventOccurrenceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    parentEventId?: boolean
+    occurrenceDate?: boolean
+    deletedAt?: boolean
+    Event?: boolean | EventDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deletedEventOccurrence"]>
+
+  export type DeletedEventOccurrenceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    parentEventId?: boolean
+    occurrenceDate?: boolean
+    deletedAt?: boolean
+    Event?: boolean | EventDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deletedEventOccurrence"]>
+
+  export type DeletedEventOccurrenceSelectScalar = {
+    id?: boolean
+    parentEventId?: boolean
+    occurrenceDate?: boolean
+    deletedAt?: boolean
+  }
+
+  export type DeletedEventOccurrenceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "parentEventId" | "occurrenceDate" | "deletedAt", ExtArgs["result"]["deletedEventOccurrence"]>
+  export type DeletedEventOccurrenceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Event?: boolean | EventDefaultArgs<ExtArgs>
+  }
+  export type DeletedEventOccurrenceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Event?: boolean | EventDefaultArgs<ExtArgs>
+  }
+  export type DeletedEventOccurrenceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Event?: boolean | EventDefaultArgs<ExtArgs>
+  }
+
+  export type $DeletedEventOccurrencePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DeletedEventOccurrence"
+    objects: {
+      Event: Prisma.$EventPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      parentEventId: string
+      occurrenceDate: Date
+      deletedAt: Date
+    }, ExtArgs["result"]["deletedEventOccurrence"]>
+    composites: {}
+  }
+
+  type DeletedEventOccurrenceGetPayload<S extends boolean | null | undefined | DeletedEventOccurrenceDefaultArgs> = $Result.GetResult<Prisma.$DeletedEventOccurrencePayload, S>
+
+  type DeletedEventOccurrenceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DeletedEventOccurrenceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DeletedEventOccurrenceCountAggregateInputType | true
+    }
+
+  export interface DeletedEventOccurrenceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DeletedEventOccurrence'], meta: { name: 'DeletedEventOccurrence' } }
+    /**
+     * Find zero or one DeletedEventOccurrence that matches the filter.
+     * @param {DeletedEventOccurrenceFindUniqueArgs} args - Arguments to find a DeletedEventOccurrence
+     * @example
+     * // Get one DeletedEventOccurrence
+     * const deletedEventOccurrence = await prisma.deletedEventOccurrence.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DeletedEventOccurrenceFindUniqueArgs>(args: SelectSubset<T, DeletedEventOccurrenceFindUniqueArgs<ExtArgs>>): Prisma__DeletedEventOccurrenceClient<$Result.GetResult<Prisma.$DeletedEventOccurrencePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DeletedEventOccurrence that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DeletedEventOccurrenceFindUniqueOrThrowArgs} args - Arguments to find a DeletedEventOccurrence
+     * @example
+     * // Get one DeletedEventOccurrence
+     * const deletedEventOccurrence = await prisma.deletedEventOccurrence.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DeletedEventOccurrenceFindUniqueOrThrowArgs>(args: SelectSubset<T, DeletedEventOccurrenceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DeletedEventOccurrenceClient<$Result.GetResult<Prisma.$DeletedEventOccurrencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DeletedEventOccurrence that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeletedEventOccurrenceFindFirstArgs} args - Arguments to find a DeletedEventOccurrence
+     * @example
+     * // Get one DeletedEventOccurrence
+     * const deletedEventOccurrence = await prisma.deletedEventOccurrence.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DeletedEventOccurrenceFindFirstArgs>(args?: SelectSubset<T, DeletedEventOccurrenceFindFirstArgs<ExtArgs>>): Prisma__DeletedEventOccurrenceClient<$Result.GetResult<Prisma.$DeletedEventOccurrencePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DeletedEventOccurrence that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeletedEventOccurrenceFindFirstOrThrowArgs} args - Arguments to find a DeletedEventOccurrence
+     * @example
+     * // Get one DeletedEventOccurrence
+     * const deletedEventOccurrence = await prisma.deletedEventOccurrence.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DeletedEventOccurrenceFindFirstOrThrowArgs>(args?: SelectSubset<T, DeletedEventOccurrenceFindFirstOrThrowArgs<ExtArgs>>): Prisma__DeletedEventOccurrenceClient<$Result.GetResult<Prisma.$DeletedEventOccurrencePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DeletedEventOccurrences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeletedEventOccurrenceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DeletedEventOccurrences
+     * const deletedEventOccurrences = await prisma.deletedEventOccurrence.findMany()
+     * 
+     * // Get first 10 DeletedEventOccurrences
+     * const deletedEventOccurrences = await prisma.deletedEventOccurrence.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const deletedEventOccurrenceWithIdOnly = await prisma.deletedEventOccurrence.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DeletedEventOccurrenceFindManyArgs>(args?: SelectSubset<T, DeletedEventOccurrenceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeletedEventOccurrencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DeletedEventOccurrence.
+     * @param {DeletedEventOccurrenceCreateArgs} args - Arguments to create a DeletedEventOccurrence.
+     * @example
+     * // Create one DeletedEventOccurrence
+     * const DeletedEventOccurrence = await prisma.deletedEventOccurrence.create({
+     *   data: {
+     *     // ... data to create a DeletedEventOccurrence
+     *   }
+     * })
+     * 
+     */
+    create<T extends DeletedEventOccurrenceCreateArgs>(args: SelectSubset<T, DeletedEventOccurrenceCreateArgs<ExtArgs>>): Prisma__DeletedEventOccurrenceClient<$Result.GetResult<Prisma.$DeletedEventOccurrencePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DeletedEventOccurrences.
+     * @param {DeletedEventOccurrenceCreateManyArgs} args - Arguments to create many DeletedEventOccurrences.
+     * @example
+     * // Create many DeletedEventOccurrences
+     * const deletedEventOccurrence = await prisma.deletedEventOccurrence.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DeletedEventOccurrenceCreateManyArgs>(args?: SelectSubset<T, DeletedEventOccurrenceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DeletedEventOccurrences and returns the data saved in the database.
+     * @param {DeletedEventOccurrenceCreateManyAndReturnArgs} args - Arguments to create many DeletedEventOccurrences.
+     * @example
+     * // Create many DeletedEventOccurrences
+     * const deletedEventOccurrence = await prisma.deletedEventOccurrence.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DeletedEventOccurrences and only return the `id`
+     * const deletedEventOccurrenceWithIdOnly = await prisma.deletedEventOccurrence.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DeletedEventOccurrenceCreateManyAndReturnArgs>(args?: SelectSubset<T, DeletedEventOccurrenceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeletedEventOccurrencePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DeletedEventOccurrence.
+     * @param {DeletedEventOccurrenceDeleteArgs} args - Arguments to delete one DeletedEventOccurrence.
+     * @example
+     * // Delete one DeletedEventOccurrence
+     * const DeletedEventOccurrence = await prisma.deletedEventOccurrence.delete({
+     *   where: {
+     *     // ... filter to delete one DeletedEventOccurrence
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DeletedEventOccurrenceDeleteArgs>(args: SelectSubset<T, DeletedEventOccurrenceDeleteArgs<ExtArgs>>): Prisma__DeletedEventOccurrenceClient<$Result.GetResult<Prisma.$DeletedEventOccurrencePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DeletedEventOccurrence.
+     * @param {DeletedEventOccurrenceUpdateArgs} args - Arguments to update one DeletedEventOccurrence.
+     * @example
+     * // Update one DeletedEventOccurrence
+     * const deletedEventOccurrence = await prisma.deletedEventOccurrence.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DeletedEventOccurrenceUpdateArgs>(args: SelectSubset<T, DeletedEventOccurrenceUpdateArgs<ExtArgs>>): Prisma__DeletedEventOccurrenceClient<$Result.GetResult<Prisma.$DeletedEventOccurrencePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DeletedEventOccurrences.
+     * @param {DeletedEventOccurrenceDeleteManyArgs} args - Arguments to filter DeletedEventOccurrences to delete.
+     * @example
+     * // Delete a few DeletedEventOccurrences
+     * const { count } = await prisma.deletedEventOccurrence.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DeletedEventOccurrenceDeleteManyArgs>(args?: SelectSubset<T, DeletedEventOccurrenceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DeletedEventOccurrences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeletedEventOccurrenceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DeletedEventOccurrences
+     * const deletedEventOccurrence = await prisma.deletedEventOccurrence.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DeletedEventOccurrenceUpdateManyArgs>(args: SelectSubset<T, DeletedEventOccurrenceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DeletedEventOccurrences and returns the data updated in the database.
+     * @param {DeletedEventOccurrenceUpdateManyAndReturnArgs} args - Arguments to update many DeletedEventOccurrences.
+     * @example
+     * // Update many DeletedEventOccurrences
+     * const deletedEventOccurrence = await prisma.deletedEventOccurrence.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DeletedEventOccurrences and only return the `id`
+     * const deletedEventOccurrenceWithIdOnly = await prisma.deletedEventOccurrence.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DeletedEventOccurrenceUpdateManyAndReturnArgs>(args: SelectSubset<T, DeletedEventOccurrenceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeletedEventOccurrencePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DeletedEventOccurrence.
+     * @param {DeletedEventOccurrenceUpsertArgs} args - Arguments to update or create a DeletedEventOccurrence.
+     * @example
+     * // Update or create a DeletedEventOccurrence
+     * const deletedEventOccurrence = await prisma.deletedEventOccurrence.upsert({
+     *   create: {
+     *     // ... data to create a DeletedEventOccurrence
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DeletedEventOccurrence we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DeletedEventOccurrenceUpsertArgs>(args: SelectSubset<T, DeletedEventOccurrenceUpsertArgs<ExtArgs>>): Prisma__DeletedEventOccurrenceClient<$Result.GetResult<Prisma.$DeletedEventOccurrencePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DeletedEventOccurrences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeletedEventOccurrenceCountArgs} args - Arguments to filter DeletedEventOccurrences to count.
+     * @example
+     * // Count the number of DeletedEventOccurrences
+     * const count = await prisma.deletedEventOccurrence.count({
+     *   where: {
+     *     // ... the filter for the DeletedEventOccurrences we want to count
+     *   }
+     * })
+    **/
+    count<T extends DeletedEventOccurrenceCountArgs>(
+      args?: Subset<T, DeletedEventOccurrenceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DeletedEventOccurrenceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DeletedEventOccurrence.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeletedEventOccurrenceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DeletedEventOccurrenceAggregateArgs>(args: Subset<T, DeletedEventOccurrenceAggregateArgs>): Prisma.PrismaPromise<GetDeletedEventOccurrenceAggregateType<T>>
+
+    /**
+     * Group by DeletedEventOccurrence.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeletedEventOccurrenceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DeletedEventOccurrenceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DeletedEventOccurrenceGroupByArgs['orderBy'] }
+        : { orderBy?: DeletedEventOccurrenceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DeletedEventOccurrenceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDeletedEventOccurrenceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DeletedEventOccurrence model
+   */
+  readonly fields: DeletedEventOccurrenceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DeletedEventOccurrence.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DeletedEventOccurrenceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DeletedEventOccurrence model
+   */
+  interface DeletedEventOccurrenceFieldRefs {
+    readonly id: FieldRef<"DeletedEventOccurrence", 'String'>
+    readonly parentEventId: FieldRef<"DeletedEventOccurrence", 'String'>
+    readonly occurrenceDate: FieldRef<"DeletedEventOccurrence", 'DateTime'>
+    readonly deletedAt: FieldRef<"DeletedEventOccurrence", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DeletedEventOccurrence findUnique
+   */
+  export type DeletedEventOccurrenceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceInclude<ExtArgs> | null
+    /**
+     * Filter, which DeletedEventOccurrence to fetch.
+     */
+    where: DeletedEventOccurrenceWhereUniqueInput
+  }
+
+  /**
+   * DeletedEventOccurrence findUniqueOrThrow
+   */
+  export type DeletedEventOccurrenceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceInclude<ExtArgs> | null
+    /**
+     * Filter, which DeletedEventOccurrence to fetch.
+     */
+    where: DeletedEventOccurrenceWhereUniqueInput
+  }
+
+  /**
+   * DeletedEventOccurrence findFirst
+   */
+  export type DeletedEventOccurrenceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceInclude<ExtArgs> | null
+    /**
+     * Filter, which DeletedEventOccurrence to fetch.
+     */
+    where?: DeletedEventOccurrenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeletedEventOccurrences to fetch.
+     */
+    orderBy?: DeletedEventOccurrenceOrderByWithRelationInput | DeletedEventOccurrenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DeletedEventOccurrences.
+     */
+    cursor?: DeletedEventOccurrenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeletedEventOccurrences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeletedEventOccurrences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeletedEventOccurrences.
+     */
+    distinct?: DeletedEventOccurrenceScalarFieldEnum | DeletedEventOccurrenceScalarFieldEnum[]
+  }
+
+  /**
+   * DeletedEventOccurrence findFirstOrThrow
+   */
+  export type DeletedEventOccurrenceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceInclude<ExtArgs> | null
+    /**
+     * Filter, which DeletedEventOccurrence to fetch.
+     */
+    where?: DeletedEventOccurrenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeletedEventOccurrences to fetch.
+     */
+    orderBy?: DeletedEventOccurrenceOrderByWithRelationInput | DeletedEventOccurrenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DeletedEventOccurrences.
+     */
+    cursor?: DeletedEventOccurrenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeletedEventOccurrences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeletedEventOccurrences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeletedEventOccurrences.
+     */
+    distinct?: DeletedEventOccurrenceScalarFieldEnum | DeletedEventOccurrenceScalarFieldEnum[]
+  }
+
+  /**
+   * DeletedEventOccurrence findMany
+   */
+  export type DeletedEventOccurrenceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceInclude<ExtArgs> | null
+    /**
+     * Filter, which DeletedEventOccurrences to fetch.
+     */
+    where?: DeletedEventOccurrenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeletedEventOccurrences to fetch.
+     */
+    orderBy?: DeletedEventOccurrenceOrderByWithRelationInput | DeletedEventOccurrenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DeletedEventOccurrences.
+     */
+    cursor?: DeletedEventOccurrenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeletedEventOccurrences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeletedEventOccurrences.
+     */
+    skip?: number
+    distinct?: DeletedEventOccurrenceScalarFieldEnum | DeletedEventOccurrenceScalarFieldEnum[]
+  }
+
+  /**
+   * DeletedEventOccurrence create
+   */
+  export type DeletedEventOccurrenceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DeletedEventOccurrence.
+     */
+    data: XOR<DeletedEventOccurrenceCreateInput, DeletedEventOccurrenceUncheckedCreateInput>
+  }
+
+  /**
+   * DeletedEventOccurrence createMany
+   */
+  export type DeletedEventOccurrenceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DeletedEventOccurrences.
+     */
+    data: DeletedEventOccurrenceCreateManyInput | DeletedEventOccurrenceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DeletedEventOccurrence createManyAndReturn
+   */
+  export type DeletedEventOccurrenceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * The data used to create many DeletedEventOccurrences.
+     */
+    data: DeletedEventOccurrenceCreateManyInput | DeletedEventOccurrenceCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DeletedEventOccurrence update
+   */
+  export type DeletedEventOccurrenceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DeletedEventOccurrence.
+     */
+    data: XOR<DeletedEventOccurrenceUpdateInput, DeletedEventOccurrenceUncheckedUpdateInput>
+    /**
+     * Choose, which DeletedEventOccurrence to update.
+     */
+    where: DeletedEventOccurrenceWhereUniqueInput
+  }
+
+  /**
+   * DeletedEventOccurrence updateMany
+   */
+  export type DeletedEventOccurrenceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DeletedEventOccurrences.
+     */
+    data: XOR<DeletedEventOccurrenceUpdateManyMutationInput, DeletedEventOccurrenceUncheckedUpdateManyInput>
+    /**
+     * Filter which DeletedEventOccurrences to update
+     */
+    where?: DeletedEventOccurrenceWhereInput
+    /**
+     * Limit how many DeletedEventOccurrences to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DeletedEventOccurrence updateManyAndReturn
+   */
+  export type DeletedEventOccurrenceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * The data used to update DeletedEventOccurrences.
+     */
+    data: XOR<DeletedEventOccurrenceUpdateManyMutationInput, DeletedEventOccurrenceUncheckedUpdateManyInput>
+    /**
+     * Filter which DeletedEventOccurrences to update
+     */
+    where?: DeletedEventOccurrenceWhereInput
+    /**
+     * Limit how many DeletedEventOccurrences to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DeletedEventOccurrence upsert
+   */
+  export type DeletedEventOccurrenceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DeletedEventOccurrence to update in case it exists.
+     */
+    where: DeletedEventOccurrenceWhereUniqueInput
+    /**
+     * In case the DeletedEventOccurrence found by the `where` argument doesn't exist, create a new DeletedEventOccurrence with this data.
+     */
+    create: XOR<DeletedEventOccurrenceCreateInput, DeletedEventOccurrenceUncheckedCreateInput>
+    /**
+     * In case the DeletedEventOccurrence was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DeletedEventOccurrenceUpdateInput, DeletedEventOccurrenceUncheckedUpdateInput>
+  }
+
+  /**
+   * DeletedEventOccurrence delete
+   */
+  export type DeletedEventOccurrenceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceInclude<ExtArgs> | null
+    /**
+     * Filter which DeletedEventOccurrence to delete.
+     */
+    where: DeletedEventOccurrenceWhereUniqueInput
+  }
+
+  /**
+   * DeletedEventOccurrence deleteMany
+   */
+  export type DeletedEventOccurrenceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DeletedEventOccurrences to delete
+     */
+    where?: DeletedEventOccurrenceWhereInput
+    /**
+     * Limit how many DeletedEventOccurrences to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DeletedEventOccurrence without action
+   */
+  export type DeletedEventOccurrenceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeletedEventOccurrence
+     */
+    select?: DeletedEventOccurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeletedEventOccurrence
+     */
+    omit?: DeletedEventOccurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeletedEventOccurrenceInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4496,6 +5669,16 @@ export namespace Prisma {
   };
 
   export type EventParticipantScalarFieldEnum = (typeof EventParticipantScalarFieldEnum)[keyof typeof EventParticipantScalarFieldEnum]
+
+
+  export const DeletedEventOccurrenceScalarFieldEnum: {
+    id: 'id',
+    parentEventId: 'parentEventId',
+    occurrenceDate: 'occurrenceDate',
+    deletedAt: 'deletedAt'
+  };
+
+  export type DeletedEventOccurrenceScalarFieldEnum = (typeof DeletedEventOccurrenceScalarFieldEnum)[keyof typeof DeletedEventOccurrenceScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4674,6 +5857,7 @@ export namespace Prisma {
     parentEventId?: StringNullableFilter<"Event"> | string | null
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
     EventParticipant?: EventParticipantListRelationFilter
+    DeletedEventOccurrence?: DeletedEventOccurrenceListRelationFilter
   }
 
   export type EventOrderByWithRelationInput = {
@@ -4689,6 +5873,7 @@ export namespace Prisma {
     parentEventId?: SortOrderInput | SortOrder
     owner?: UserOrderByWithRelationInput
     EventParticipant?: EventParticipantOrderByRelationAggregateInput
+    DeletedEventOccurrence?: DeletedEventOccurrenceOrderByRelationAggregateInput
   }
 
   export type EventWhereUniqueInput = Prisma.AtLeast<{
@@ -4707,6 +5892,7 @@ export namespace Prisma {
     parentEventId?: StringNullableFilter<"Event"> | string | null
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
     EventParticipant?: EventParticipantListRelationFilter
+    DeletedEventOccurrence?: DeletedEventOccurrenceListRelationFilter
   }, "id">
 
   export type EventOrderByWithAggregationInput = {
@@ -4795,6 +5981,57 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"EventParticipant"> | Date | string
   }
 
+  export type DeletedEventOccurrenceWhereInput = {
+    AND?: DeletedEventOccurrenceWhereInput | DeletedEventOccurrenceWhereInput[]
+    OR?: DeletedEventOccurrenceWhereInput[]
+    NOT?: DeletedEventOccurrenceWhereInput | DeletedEventOccurrenceWhereInput[]
+    id?: StringFilter<"DeletedEventOccurrence"> | string
+    parentEventId?: StringFilter<"DeletedEventOccurrence"> | string
+    occurrenceDate?: DateTimeFilter<"DeletedEventOccurrence"> | Date | string
+    deletedAt?: DateTimeFilter<"DeletedEventOccurrence"> | Date | string
+    Event?: XOR<EventScalarRelationFilter, EventWhereInput>
+  }
+
+  export type DeletedEventOccurrenceOrderByWithRelationInput = {
+    id?: SortOrder
+    parentEventId?: SortOrder
+    occurrenceDate?: SortOrder
+    deletedAt?: SortOrder
+    Event?: EventOrderByWithRelationInput
+  }
+
+  export type DeletedEventOccurrenceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    parentEventId_occurrenceDate?: DeletedEventOccurrenceParentEventIdOccurrenceDateCompoundUniqueInput
+    AND?: DeletedEventOccurrenceWhereInput | DeletedEventOccurrenceWhereInput[]
+    OR?: DeletedEventOccurrenceWhereInput[]
+    NOT?: DeletedEventOccurrenceWhereInput | DeletedEventOccurrenceWhereInput[]
+    parentEventId?: StringFilter<"DeletedEventOccurrence"> | string
+    occurrenceDate?: DateTimeFilter<"DeletedEventOccurrence"> | Date | string
+    deletedAt?: DateTimeFilter<"DeletedEventOccurrence"> | Date | string
+    Event?: XOR<EventScalarRelationFilter, EventWhereInput>
+  }, "id" | "parentEventId_occurrenceDate">
+
+  export type DeletedEventOccurrenceOrderByWithAggregationInput = {
+    id?: SortOrder
+    parentEventId?: SortOrder
+    occurrenceDate?: SortOrder
+    deletedAt?: SortOrder
+    _count?: DeletedEventOccurrenceCountOrderByAggregateInput
+    _max?: DeletedEventOccurrenceMaxOrderByAggregateInput
+    _min?: DeletedEventOccurrenceMinOrderByAggregateInput
+  }
+
+  export type DeletedEventOccurrenceScalarWhereWithAggregatesInput = {
+    AND?: DeletedEventOccurrenceScalarWhereWithAggregatesInput | DeletedEventOccurrenceScalarWhereWithAggregatesInput[]
+    OR?: DeletedEventOccurrenceScalarWhereWithAggregatesInput[]
+    NOT?: DeletedEventOccurrenceScalarWhereWithAggregatesInput | DeletedEventOccurrenceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DeletedEventOccurrence"> | string
+    parentEventId?: StringWithAggregatesFilter<"DeletedEventOccurrence"> | string
+    occurrenceDate?: DateTimeWithAggregatesFilter<"DeletedEventOccurrence"> | Date | string
+    deletedAt?: DateTimeWithAggregatesFilter<"DeletedEventOccurrence"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name: string
@@ -4871,6 +6108,7 @@ export namespace Prisma {
     parentEventId?: string | null
     owner: UserCreateNestedOneWithoutEventsInput
     EventParticipant?: EventParticipantCreateNestedManyWithoutEventInput
+    DeletedEventOccurrence?: DeletedEventOccurrenceCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateInput = {
@@ -4885,6 +6123,7 @@ export namespace Prisma {
     recurrence?: $Enums.Recurrence
     parentEventId?: string | null
     EventParticipant?: EventParticipantUncheckedCreateNestedManyWithoutEventInput
+    DeletedEventOccurrence?: DeletedEventOccurrenceUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventUpdateInput = {
@@ -4899,6 +6138,7 @@ export namespace Prisma {
     parentEventId?: NullableStringFieldUpdateOperationsInput | string | null
     owner?: UserUpdateOneRequiredWithoutEventsNestedInput
     EventParticipant?: EventParticipantUpdateManyWithoutEventNestedInput
+    DeletedEventOccurrence?: DeletedEventOccurrenceUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateInput = {
@@ -4913,6 +6153,7 @@ export namespace Prisma {
     recurrence?: EnumRecurrenceFieldUpdateOperationsInput | $Enums.Recurrence
     parentEventId?: NullableStringFieldUpdateOperationsInput | string | null
     EventParticipant?: EventParticipantUncheckedUpdateManyWithoutEventNestedInput
+    DeletedEventOccurrence?: DeletedEventOccurrenceUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventCreateManyInput = {
@@ -4998,6 +6239,54 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     role?: EnumParticipantRoleFieldUpdateOperationsInput | $Enums.ParticipantRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeletedEventOccurrenceCreateInput = {
+    id?: string
+    occurrenceDate: Date | string
+    deletedAt?: Date | string
+    Event: EventCreateNestedOneWithoutDeletedEventOccurrenceInput
+  }
+
+  export type DeletedEventOccurrenceUncheckedCreateInput = {
+    id?: string
+    parentEventId: string
+    occurrenceDate: Date | string
+    deletedAt?: Date | string
+  }
+
+  export type DeletedEventOccurrenceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    occurrenceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Event?: EventUpdateOneRequiredWithoutDeletedEventOccurrenceNestedInput
+  }
+
+  export type DeletedEventOccurrenceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentEventId?: StringFieldUpdateOperationsInput | string
+    occurrenceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeletedEventOccurrenceCreateManyInput = {
+    id?: string
+    parentEventId: string
+    occurrenceDate: Date | string
+    deletedAt?: Date | string
+  }
+
+  export type DeletedEventOccurrenceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    occurrenceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeletedEventOccurrenceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentEventId?: StringFieldUpdateOperationsInput | string
+    occurrenceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -5129,9 +6418,19 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
+  export type DeletedEventOccurrenceListRelationFilter = {
+    every?: DeletedEventOccurrenceWhereInput
+    some?: DeletedEventOccurrenceWhereInput
+    none?: DeletedEventOccurrenceWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type DeletedEventOccurrenceOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type EventCountOrderByAggregateInput = {
@@ -5249,6 +6548,32 @@ export namespace Prisma {
     _max?: NestedEnumParticipantRoleFilter<$PrismaModel>
   }
 
+  export type DeletedEventOccurrenceParentEventIdOccurrenceDateCompoundUniqueInput = {
+    parentEventId: string
+    occurrenceDate: Date | string
+  }
+
+  export type DeletedEventOccurrenceCountOrderByAggregateInput = {
+    id?: SortOrder
+    parentEventId?: SortOrder
+    occurrenceDate?: SortOrder
+    deletedAt?: SortOrder
+  }
+
+  export type DeletedEventOccurrenceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    parentEventId?: SortOrder
+    occurrenceDate?: SortOrder
+    deletedAt?: SortOrder
+  }
+
+  export type DeletedEventOccurrenceMinOrderByAggregateInput = {
+    id?: SortOrder
+    parentEventId?: SortOrder
+    occurrenceDate?: SortOrder
+    deletedAt?: SortOrder
+  }
+
   export type EventCreateNestedManyWithoutOwnerInput = {
     create?: XOR<EventCreateWithoutOwnerInput, EventUncheckedCreateWithoutOwnerInput> | EventCreateWithoutOwnerInput[] | EventUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: EventCreateOrConnectWithoutOwnerInput | EventCreateOrConnectWithoutOwnerInput[]
@@ -5354,11 +6679,25 @@ export namespace Prisma {
     connect?: EventParticipantWhereUniqueInput | EventParticipantWhereUniqueInput[]
   }
 
+  export type DeletedEventOccurrenceCreateNestedManyWithoutEventInput = {
+    create?: XOR<DeletedEventOccurrenceCreateWithoutEventInput, DeletedEventOccurrenceUncheckedCreateWithoutEventInput> | DeletedEventOccurrenceCreateWithoutEventInput[] | DeletedEventOccurrenceUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: DeletedEventOccurrenceCreateOrConnectWithoutEventInput | DeletedEventOccurrenceCreateOrConnectWithoutEventInput[]
+    createMany?: DeletedEventOccurrenceCreateManyEventInputEnvelope
+    connect?: DeletedEventOccurrenceWhereUniqueInput | DeletedEventOccurrenceWhereUniqueInput[]
+  }
+
   export type EventParticipantUncheckedCreateNestedManyWithoutEventInput = {
     create?: XOR<EventParticipantCreateWithoutEventInput, EventParticipantUncheckedCreateWithoutEventInput> | EventParticipantCreateWithoutEventInput[] | EventParticipantUncheckedCreateWithoutEventInput[]
     connectOrCreate?: EventParticipantCreateOrConnectWithoutEventInput | EventParticipantCreateOrConnectWithoutEventInput[]
     createMany?: EventParticipantCreateManyEventInputEnvelope
     connect?: EventParticipantWhereUniqueInput | EventParticipantWhereUniqueInput[]
+  }
+
+  export type DeletedEventOccurrenceUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<DeletedEventOccurrenceCreateWithoutEventInput, DeletedEventOccurrenceUncheckedCreateWithoutEventInput> | DeletedEventOccurrenceCreateWithoutEventInput[] | DeletedEventOccurrenceUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: DeletedEventOccurrenceCreateOrConnectWithoutEventInput | DeletedEventOccurrenceCreateOrConnectWithoutEventInput[]
+    createMany?: DeletedEventOccurrenceCreateManyEventInputEnvelope
+    connect?: DeletedEventOccurrenceWhereUniqueInput | DeletedEventOccurrenceWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -5391,6 +6730,20 @@ export namespace Prisma {
     deleteMany?: EventParticipantScalarWhereInput | EventParticipantScalarWhereInput[]
   }
 
+  export type DeletedEventOccurrenceUpdateManyWithoutEventNestedInput = {
+    create?: XOR<DeletedEventOccurrenceCreateWithoutEventInput, DeletedEventOccurrenceUncheckedCreateWithoutEventInput> | DeletedEventOccurrenceCreateWithoutEventInput[] | DeletedEventOccurrenceUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: DeletedEventOccurrenceCreateOrConnectWithoutEventInput | DeletedEventOccurrenceCreateOrConnectWithoutEventInput[]
+    upsert?: DeletedEventOccurrenceUpsertWithWhereUniqueWithoutEventInput | DeletedEventOccurrenceUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: DeletedEventOccurrenceCreateManyEventInputEnvelope
+    set?: DeletedEventOccurrenceWhereUniqueInput | DeletedEventOccurrenceWhereUniqueInput[]
+    disconnect?: DeletedEventOccurrenceWhereUniqueInput | DeletedEventOccurrenceWhereUniqueInput[]
+    delete?: DeletedEventOccurrenceWhereUniqueInput | DeletedEventOccurrenceWhereUniqueInput[]
+    connect?: DeletedEventOccurrenceWhereUniqueInput | DeletedEventOccurrenceWhereUniqueInput[]
+    update?: DeletedEventOccurrenceUpdateWithWhereUniqueWithoutEventInput | DeletedEventOccurrenceUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: DeletedEventOccurrenceUpdateManyWithWhereWithoutEventInput | DeletedEventOccurrenceUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: DeletedEventOccurrenceScalarWhereInput | DeletedEventOccurrenceScalarWhereInput[]
+  }
+
   export type EventParticipantUncheckedUpdateManyWithoutEventNestedInput = {
     create?: XOR<EventParticipantCreateWithoutEventInput, EventParticipantUncheckedCreateWithoutEventInput> | EventParticipantCreateWithoutEventInput[] | EventParticipantUncheckedCreateWithoutEventInput[]
     connectOrCreate?: EventParticipantCreateOrConnectWithoutEventInput | EventParticipantCreateOrConnectWithoutEventInput[]
@@ -5403,6 +6756,20 @@ export namespace Prisma {
     update?: EventParticipantUpdateWithWhereUniqueWithoutEventInput | EventParticipantUpdateWithWhereUniqueWithoutEventInput[]
     updateMany?: EventParticipantUpdateManyWithWhereWithoutEventInput | EventParticipantUpdateManyWithWhereWithoutEventInput[]
     deleteMany?: EventParticipantScalarWhereInput | EventParticipantScalarWhereInput[]
+  }
+
+  export type DeletedEventOccurrenceUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<DeletedEventOccurrenceCreateWithoutEventInput, DeletedEventOccurrenceUncheckedCreateWithoutEventInput> | DeletedEventOccurrenceCreateWithoutEventInput[] | DeletedEventOccurrenceUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: DeletedEventOccurrenceCreateOrConnectWithoutEventInput | DeletedEventOccurrenceCreateOrConnectWithoutEventInput[]
+    upsert?: DeletedEventOccurrenceUpsertWithWhereUniqueWithoutEventInput | DeletedEventOccurrenceUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: DeletedEventOccurrenceCreateManyEventInputEnvelope
+    set?: DeletedEventOccurrenceWhereUniqueInput | DeletedEventOccurrenceWhereUniqueInput[]
+    disconnect?: DeletedEventOccurrenceWhereUniqueInput | DeletedEventOccurrenceWhereUniqueInput[]
+    delete?: DeletedEventOccurrenceWhereUniqueInput | DeletedEventOccurrenceWhereUniqueInput[]
+    connect?: DeletedEventOccurrenceWhereUniqueInput | DeletedEventOccurrenceWhereUniqueInput[]
+    update?: DeletedEventOccurrenceUpdateWithWhereUniqueWithoutEventInput | DeletedEventOccurrenceUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: DeletedEventOccurrenceUpdateManyWithWhereWithoutEventInput | DeletedEventOccurrenceUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: DeletedEventOccurrenceScalarWhereInput | DeletedEventOccurrenceScalarWhereInput[]
   }
 
   export type EventCreateNestedOneWithoutEventParticipantInput = {
@@ -5435,6 +6802,20 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutEventParticipantInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEventParticipantInput, UserUpdateWithoutEventParticipantInput>, UserUncheckedUpdateWithoutEventParticipantInput>
+  }
+
+  export type EventCreateNestedOneWithoutDeletedEventOccurrenceInput = {
+    create?: XOR<EventCreateWithoutDeletedEventOccurrenceInput, EventUncheckedCreateWithoutDeletedEventOccurrenceInput>
+    connectOrCreate?: EventCreateOrConnectWithoutDeletedEventOccurrenceInput
+    connect?: EventWhereUniqueInput
+  }
+
+  export type EventUpdateOneRequiredWithoutDeletedEventOccurrenceNestedInput = {
+    create?: XOR<EventCreateWithoutDeletedEventOccurrenceInput, EventUncheckedCreateWithoutDeletedEventOccurrenceInput>
+    connectOrCreate?: EventCreateOrConnectWithoutDeletedEventOccurrenceInput
+    upsert?: EventUpsertWithoutDeletedEventOccurrenceInput
+    connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutDeletedEventOccurrenceInput, EventUpdateWithoutDeletedEventOccurrenceInput>, EventUncheckedUpdateWithoutDeletedEventOccurrenceInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5591,6 +6972,7 @@ export namespace Prisma {
     recurrence?: $Enums.Recurrence
     parentEventId?: string | null
     EventParticipant?: EventParticipantCreateNestedManyWithoutEventInput
+    DeletedEventOccurrence?: DeletedEventOccurrenceCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutOwnerInput = {
@@ -5604,6 +6986,7 @@ export namespace Prisma {
     recurrence?: $Enums.Recurrence
     parentEventId?: string | null
     EventParticipant?: EventParticipantUncheckedCreateNestedManyWithoutEventInput
+    DeletedEventOccurrence?: DeletedEventOccurrenceUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutOwnerInput = {
@@ -5741,6 +7124,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type DeletedEventOccurrenceCreateWithoutEventInput = {
+    id?: string
+    occurrenceDate: Date | string
+    deletedAt?: Date | string
+  }
+
+  export type DeletedEventOccurrenceUncheckedCreateWithoutEventInput = {
+    id?: string
+    occurrenceDate: Date | string
+    deletedAt?: Date | string
+  }
+
+  export type DeletedEventOccurrenceCreateOrConnectWithoutEventInput = {
+    where: DeletedEventOccurrenceWhereUniqueInput
+    create: XOR<DeletedEventOccurrenceCreateWithoutEventInput, DeletedEventOccurrenceUncheckedCreateWithoutEventInput>
+  }
+
+  export type DeletedEventOccurrenceCreateManyEventInputEnvelope = {
+    data: DeletedEventOccurrenceCreateManyEventInput | DeletedEventOccurrenceCreateManyEventInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutEventsInput = {
     update: XOR<UserUpdateWithoutEventsInput, UserUncheckedUpdateWithoutEventsInput>
     create: XOR<UserCreateWithoutEventsInput, UserUncheckedCreateWithoutEventsInput>
@@ -5786,6 +7191,32 @@ export namespace Prisma {
     data: XOR<EventParticipantUpdateManyMutationInput, EventParticipantUncheckedUpdateManyWithoutEventInput>
   }
 
+  export type DeletedEventOccurrenceUpsertWithWhereUniqueWithoutEventInput = {
+    where: DeletedEventOccurrenceWhereUniqueInput
+    update: XOR<DeletedEventOccurrenceUpdateWithoutEventInput, DeletedEventOccurrenceUncheckedUpdateWithoutEventInput>
+    create: XOR<DeletedEventOccurrenceCreateWithoutEventInput, DeletedEventOccurrenceUncheckedCreateWithoutEventInput>
+  }
+
+  export type DeletedEventOccurrenceUpdateWithWhereUniqueWithoutEventInput = {
+    where: DeletedEventOccurrenceWhereUniqueInput
+    data: XOR<DeletedEventOccurrenceUpdateWithoutEventInput, DeletedEventOccurrenceUncheckedUpdateWithoutEventInput>
+  }
+
+  export type DeletedEventOccurrenceUpdateManyWithWhereWithoutEventInput = {
+    where: DeletedEventOccurrenceScalarWhereInput
+    data: XOR<DeletedEventOccurrenceUpdateManyMutationInput, DeletedEventOccurrenceUncheckedUpdateManyWithoutEventInput>
+  }
+
+  export type DeletedEventOccurrenceScalarWhereInput = {
+    AND?: DeletedEventOccurrenceScalarWhereInput | DeletedEventOccurrenceScalarWhereInput[]
+    OR?: DeletedEventOccurrenceScalarWhereInput[]
+    NOT?: DeletedEventOccurrenceScalarWhereInput | DeletedEventOccurrenceScalarWhereInput[]
+    id?: StringFilter<"DeletedEventOccurrence"> | string
+    parentEventId?: StringFilter<"DeletedEventOccurrence"> | string
+    occurrenceDate?: DateTimeFilter<"DeletedEventOccurrence"> | Date | string
+    deletedAt?: DateTimeFilter<"DeletedEventOccurrence"> | Date | string
+  }
+
   export type EventCreateWithoutEventParticipantInput = {
     id?: string
     title: string
@@ -5797,6 +7228,7 @@ export namespace Prisma {
     recurrence?: $Enums.Recurrence
     parentEventId?: string | null
     owner: UserCreateNestedOneWithoutEventsInput
+    DeletedEventOccurrence?: DeletedEventOccurrenceCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutEventParticipantInput = {
@@ -5810,6 +7242,7 @@ export namespace Prisma {
     createdAt?: Date | string
     recurrence?: $Enums.Recurrence
     parentEventId?: string | null
+    DeletedEventOccurrence?: DeletedEventOccurrenceUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutEventParticipantInput = {
@@ -5862,6 +7295,7 @@ export namespace Prisma {
     recurrence?: EnumRecurrenceFieldUpdateOperationsInput | $Enums.Recurrence
     parentEventId?: NullableStringFieldUpdateOperationsInput | string | null
     owner?: UserUpdateOneRequiredWithoutEventsNestedInput
+    DeletedEventOccurrence?: DeletedEventOccurrenceUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutEventParticipantInput = {
@@ -5875,6 +7309,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     recurrence?: EnumRecurrenceFieldUpdateOperationsInput | $Enums.Recurrence
     parentEventId?: NullableStringFieldUpdateOperationsInput | string | null
+    DeletedEventOccurrence?: DeletedEventOccurrenceUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type UserUpsertWithoutEventParticipantInput = {
@@ -5906,6 +7341,78 @@ export namespace Prisma {
     events?: EventUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
+  export type EventCreateWithoutDeletedEventOccurrenceInput = {
+    id?: string
+    title: string
+    description?: string | null
+    category: string
+    startsAt: Date | string
+    endsAt: Date | string
+    createdAt?: Date | string
+    recurrence?: $Enums.Recurrence
+    parentEventId?: string | null
+    owner: UserCreateNestedOneWithoutEventsInput
+    EventParticipant?: EventParticipantCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateWithoutDeletedEventOccurrenceInput = {
+    id?: string
+    ownerId: string
+    title: string
+    description?: string | null
+    category: string
+    startsAt: Date | string
+    endsAt: Date | string
+    createdAt?: Date | string
+    recurrence?: $Enums.Recurrence
+    parentEventId?: string | null
+    EventParticipant?: EventParticipantUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventCreateOrConnectWithoutDeletedEventOccurrenceInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutDeletedEventOccurrenceInput, EventUncheckedCreateWithoutDeletedEventOccurrenceInput>
+  }
+
+  export type EventUpsertWithoutDeletedEventOccurrenceInput = {
+    update: XOR<EventUpdateWithoutDeletedEventOccurrenceInput, EventUncheckedUpdateWithoutDeletedEventOccurrenceInput>
+    create: XOR<EventCreateWithoutDeletedEventOccurrenceInput, EventUncheckedCreateWithoutDeletedEventOccurrenceInput>
+    where?: EventWhereInput
+  }
+
+  export type EventUpdateToOneWithWhereWithoutDeletedEventOccurrenceInput = {
+    where?: EventWhereInput
+    data: XOR<EventUpdateWithoutDeletedEventOccurrenceInput, EventUncheckedUpdateWithoutDeletedEventOccurrenceInput>
+  }
+
+  export type EventUpdateWithoutDeletedEventOccurrenceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recurrence?: EnumRecurrenceFieldUpdateOperationsInput | $Enums.Recurrence
+    parentEventId?: NullableStringFieldUpdateOperationsInput | string | null
+    owner?: UserUpdateOneRequiredWithoutEventsNestedInput
+    EventParticipant?: EventParticipantUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutDeletedEventOccurrenceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recurrence?: EnumRecurrenceFieldUpdateOperationsInput | $Enums.Recurrence
+    parentEventId?: NullableStringFieldUpdateOperationsInput | string | null
+    EventParticipant?: EventParticipantUncheckedUpdateManyWithoutEventNestedInput
+  }
+
   export type EventCreateManyOwnerInput = {
     id?: string
     title: string
@@ -5935,6 +7442,7 @@ export namespace Prisma {
     recurrence?: EnumRecurrenceFieldUpdateOperationsInput | $Enums.Recurrence
     parentEventId?: NullableStringFieldUpdateOperationsInput | string | null
     EventParticipant?: EventParticipantUpdateManyWithoutEventNestedInput
+    DeletedEventOccurrence?: DeletedEventOccurrenceUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutOwnerInput = {
@@ -5948,6 +7456,7 @@ export namespace Prisma {
     recurrence?: EnumRecurrenceFieldUpdateOperationsInput | $Enums.Recurrence
     parentEventId?: NullableStringFieldUpdateOperationsInput | string | null
     EventParticipant?: EventParticipantUncheckedUpdateManyWithoutEventNestedInput
+    DeletedEventOccurrence?: DeletedEventOccurrenceUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateManyWithoutOwnerInput = {
@@ -5986,6 +7495,12 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type DeletedEventOccurrenceCreateManyEventInput = {
+    id?: string
+    occurrenceDate: Date | string
+    deletedAt?: Date | string
+  }
+
   export type EventParticipantUpdateWithoutEventInput = {
     role?: EnumParticipantRoleFieldUpdateOperationsInput | $Enums.ParticipantRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6002,6 +7517,24 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     role?: EnumParticipantRoleFieldUpdateOperationsInput | $Enums.ParticipantRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeletedEventOccurrenceUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    occurrenceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeletedEventOccurrenceUncheckedUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    occurrenceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeletedEventOccurrenceUncheckedUpdateManyWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    occurrenceDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

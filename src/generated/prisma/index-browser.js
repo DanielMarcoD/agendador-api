@@ -148,6 +148,13 @@ exports.Prisma.EventParticipantScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.DeletedEventOccurrenceScalarFieldEnum = {
+  id: 'id',
+  parentEventId: 'parentEventId',
+  occurrenceDate: 'occurrenceDate',
+  deletedAt: 'deletedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -177,7 +184,8 @@ exports.ParticipantRole = exports.$Enums.ParticipantRole = {
 exports.Prisma.ModelName = {
   User: 'User',
   Event: 'Event',
-  EventParticipant: 'EventParticipant'
+  EventParticipant: 'EventParticipant',
+  DeletedEventOccurrence: 'DeletedEventOccurrence'
 };
 
 /**

@@ -4,7 +4,7 @@ import jwt from '@fastify/jwt'
 import { env } from './config/env'
 import { authRoutes } from './modules/auth/routes'
 import { eventsRoutes } from './modules/events/routes'
-import swagger from './plugins/swagger'
+//import { swagger } from './plugins/swagger'
 
 const app = Fastify({ logger: true })
 
@@ -51,7 +51,7 @@ try {
 }
 
 // Registrar Swagger
-await app.register(swagger)
+//await app.register(swagger)
 
 app.get('/health', async () => ({ ok: true, env: env.NODE_ENV }))
 

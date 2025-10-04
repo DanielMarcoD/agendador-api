@@ -9,7 +9,6 @@ export async function eventsRoutes(app: FastifyInstance) {
   // Rota para buscar categorias disponíveis
   app.get('/events/categories', {
     schema: {
-      tags: ['Events']
     }
   }, async () => {
     const categories = ['alerta', 'estudo', 'lembrete', 'reuniao', 'tarefa']
@@ -19,7 +18,6 @@ export async function eventsRoutes(app: FastifyInstance) {
   app.post('/events', { 
     preHandler: auth,
     schema: {
-      tags: ['Events']
     }
   }, async (req, reply) => {
     const userId = (req.user as any).sub as string
@@ -66,7 +64,6 @@ export async function eventsRoutes(app: FastifyInstance) {
   app.get('/events', { 
     preHandler: auth,
     schema: {
-      tags: ['Events']
     }
   }, async (req, _reply) => {
     const userId = (req.user as any).sub as string
@@ -103,6 +100,13 @@ export async function eventsRoutes(app: FastifyInstance) {
     for (const event of allEvents) {
       // Se o evento é recorrente e é evento pai, gerar apenas ocorrências virtuais
       if (event.recurrence !== 'NONE' && !event.parentEventId) {
+        // Buscar ocorrências deletadas para este evento
+        const deletedOccurrences = await prisma.deletedEventOccurrence.findMany({
+          where: { parentEventId: event.id }
+        })
+        
+        const deletedDates = deletedOccurrences.map(occ => occ.occurrenceDate)
+        
         const virtualEvents = generateRecurringEventsForPeriod(
           {
             id: event.id,
@@ -115,7 +119,8 @@ export async function eventsRoutes(app: FastifyInstance) {
             ownerId: event.ownerId
           },
           from,
-          to
+          to,
+          deletedDates
         )
 
         // Adicionar eventos virtuais com informações completas
@@ -148,7 +153,6 @@ export async function eventsRoutes(app: FastifyInstance) {
   app.get('/events/:id', { 
     preHandler: auth,
     schema: {
-      tags: ['Events']
     }
   }, async (req, reply) => {
     const userId = (req.user as any).sub as string
@@ -264,7 +268,6 @@ export async function eventsRoutes(app: FastifyInstance) {
   app.put('/events/:id', { 
     preHandler: auth,
     schema: {
-      tags: ['Events']
     }
   }, async (req, reply) => {
     const userId = (req.user as any).sub as string
@@ -391,10 +394,36 @@ export async function eventsRoutes(app: FastifyInstance) {
         // Deletar toda a série (evento pai)
         await prisma.event.delete({ where: { id: actualEventId } })
       } else {
-        // Para eventos virtuais, não podemos deletar apenas uma ocorrência
-        // Retornar erro pedindo para especificar se quer deletar toda a série
-        return reply.code(400).send({ 
-          message: 'Cannot delete single virtual event occurrence. Use deleteSeries=true to delete entire series.' 
+        // Deletar apenas esta ocorrência virtual
+        // Extrair a data da ocorrência a partir do ID virtual
+        const parts = id.split('-')
+        const lastPart = parts[parts.length - 1]
+        const occurrenceIndex = lastPart ? parseInt(lastPart) : 0
+        
+        // Calcular a data desta ocorrência
+        const duration = current.endsAt.getTime() - current.startsAt.getTime()
+        let occurrenceDate = new Date(current.startsAt)
+        
+        for (let i = 0; i < occurrenceIndex; i++) {
+          switch (current.recurrence) {
+            case 'DAILY':
+              occurrenceDate.setDate(occurrenceDate.getDate() + 1)
+              break
+            case 'WEEKLY':
+              occurrenceDate.setDate(occurrenceDate.getDate() + 7)
+              break
+            case 'MONTHLY':
+              occurrenceDate.setMonth(occurrenceDate.getMonth() + 1)
+              break
+          }
+        }
+        
+        // Criar registro de ocorrência deletada
+        await prisma.deletedEventOccurrence.create({
+          data: {
+            parentEventId: actualEventId,
+            occurrenceDate: occurrenceDate
+          }
         })
       }
     } else {
@@ -460,7 +489,6 @@ export async function eventsRoutes(app: FastifyInstance) {
   app.post('/events/:id/share', { 
     preHandler: auth,
     schema: {
-      tags: ['Events']
     }
   }, async (req, reply) => {
     const userId = (req.user as any).sub as string
@@ -494,14 +522,13 @@ export async function eventsRoutes(app: FastifyInstance) {
       skipDuplicates: true
     })
 
-    return reply.code(200).send({ message: 'Event shared successfully' })
+    return reply.code(204).send({ message: 'Event shared successfully' })
   })
 
   // Rota para buscar usuários (para compartilhamento)
   app.get('/users/search', { 
     preHandler: auth,
     schema: {
-      tags: ['Users']
     }
   }, async (req, reply) => {
     const q = req.query as { search?: string }
